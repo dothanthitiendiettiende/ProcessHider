@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8A5080821746743E003C4BAC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A5080801746743E003C4BAC /* InfoPlist.strings */; };
 		8A5080841746743E003C4BAC /* ProcHider.c in Sources */ = {isa = PBXBuildFile; fileRef = 8A5080831746743E003C4BAC /* ProcHider.c */; };
+		8A50808C1746AEFF003C4BAC /* ProcHider.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A50808B1746AEFF003C4BAC /* ProcHider.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +19,7 @@
 		8A5080811746743E003C4BAC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8A5080831746743E003C4BAC /* ProcHider.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ProcHider.c; sourceTree = "<group>"; };
 		8A5080851746743E003C4BAC /* ProcHider-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProcHider-Prefix.pch"; sourceTree = "<group>"; };
+		8A50808B1746AEFF003C4BAC /* ProcHider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcHider.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				8A5080831746743E003C4BAC /* ProcHider.c */,
+				8A50808B1746AEFF003C4BAC /* ProcHider.h */,
 				8A50807E1746743E003C4BAC /* Supporting Files */,
 			);
 			path = ProcHider;
@@ -90,6 +93,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A50808C1746AEFF003C4BAC /* ProcHider.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,7 +200,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = 1;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -236,6 +240,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_OPTIMIZATION_LEVEL = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ProcHider/ProcHider-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
